@@ -1,0 +1,53 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/stylesHome.css">
+
+</head>
+
+<body>
+    <ul class="navbar">
+        <li class="active"><a href="/">Home</a></li>
+        <li><a href="/create">Create users</a></li>
+    </ul>
+
+
+    <div class="table-container">
+        <%= JSON.stringify(listUser)%>
+        <table>
+            <caption>Bảng Thông Tin Người Dùng</caption>
+            <thead>
+                <tr>
+                    <th>Tên</th>
+                    <th>Tuổi</th>
+                    <th>Email</th>
+                    <th>Quốc gia</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Nguyễn Văn A</td>
+                    <td>25</td>
+                    <td>a@example.com</td>
+                    <td>Việt Nam</td>
+                </tr>
+                <tr>
+                    <td>Trần Thị B</td>
+                    <td>30</td>
+                    <td>b@example.com</td>
+                    <td>Việt Nam</td>
+                </tr>
+                <tr>
+                    <td>Lê Văn C</td>
+                    <td>28</td>
+                    <td>c@example.com</td>
+                    <td>Việt Nam</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

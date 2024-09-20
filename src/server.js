@@ -10,6 +10,10 @@ const app = express()
 const port = process.env.PORT || 65535
 const hostname = process.env.HOST_NAME
 
+// config req.body
+app.use(express.json()) // for json
+app.use(express.urlencoded({ extended: true })) // for form data
+
 //config template engine
 configViewEngine(app)
 
@@ -17,12 +21,12 @@ configViewEngine(app)
 app.use('/',webRouter)
 
 
-connection.query(
-  'select * from Users u',
-  function (err, results, fields){
-    console.log('Check results: ', results)
-  }
-)
+// connection.query(
+//   'select * from Users u',
+//   function (err, results, fields){
+//     console.log('Check results: ', results)
+//   }
+// )
 
 app.listen(port, hostname, () => {
   console.log(`Example app listening on port ${port}`)

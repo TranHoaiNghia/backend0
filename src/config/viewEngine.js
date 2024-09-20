@@ -2,8 +2,6 @@ const path = require('path')
 const express = require('express')
 
 const configViewEngine = (app) => {
-    //test __dirname
-    console.log("check dirname: ", path.join('./src', 'views'))
 
     // config template view engine
     app.set('views', path.join('./src', 'views'))
