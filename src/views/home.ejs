@@ -1,8 +1,9 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home</title>
     <link rel="stylesheet" href="/css/stylesHome.css">
 
 </head>
@@ -15,36 +16,51 @@
 
 
     <div class="table-container">
-        <%= JSON.stringify(listUser)%>
         <table>
             <caption>Bảng Thông Tin Người Dùng</caption>
             <thead>
                 <tr>
-                    <th>Tên</th>
-                    <th>Tuổi</th>
+                    <th>Id</th>
                     <th>Email</th>
-                    <th>Quốc gia</th>
+                    <th>Họ tên</th>
+                    <th>Thành phố</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Nguyễn Văn A</td>
-                    <td>25</td>
-                    <td>a@example.com</td>
-                    <td>Việt Nam</td>
-                </tr>
-                <tr>
-                    <td>Trần Thị B</td>
-                    <td>30</td>
-                    <td>b@example.com</td>
-                    <td>Việt Nam</td>
-                </tr>
-                <tr>
-                    <td>Lê Văn C</td>
-                    <td>28</td>
-                    <td>c@example.com</td>
-                    <td>Việt Nam</td>
-                </tr>
+                <!-- <% for (let i = 0; i < listUser.length; i++) { 
+                    %>
+                        <tr>
+                            <td><%= listUser[i].id  %></td>
+                            <td><%= listUser[i].email %></td>
+                            <td><%= listUser[i].name %></td>
+                            <td><%= listUser[i].city %></td>
+                            <td>
+                                <button class="button">Edit</button>
+                                <button class="button">Save</button>
+                            </td>
+                        </tr>
+                    <%
+                } %> -->
+
+                <!-- Vòng lặp forEach cách 2 -->
+                <% listUser.forEach(function(user) {
+                    %> 
+                       <tr>
+                            <td><%= user.id %></td>
+                            <td><%= user.email %></td>
+                            <td><%= user.name %></td>
+                            <td><%= user.city %></td>
+                            <td>
+                                <a  class="button" href="/update/<%= user.id %>">Edit</a>
+
+                                <form action="/delete-user/<%= user.id %>" method="post">
+                                    <button class="button">Delete</button>
+                                </form>
+                            </td>
+                       </tr>
+                    <%
+                }) %>
             </tbody>
         </table>
     </div>

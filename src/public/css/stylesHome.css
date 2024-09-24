@@ -116,3 +116,23 @@ caption {
     border-radius: 10px 10px 0 0; /* Bo tròn các góc trên */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Bóng đổ nhẹ */
 }
+
+.button {
+    background-color: #4CAF50; /* Màu nền của nút */
+    color: white; /* Màu chữ */
+    border: none; /* Không có đường viền */
+    padding: 10px 15px; /* Khoảng cách bên trong */
+    border-radius: 5px; /* Bo tròn các góc */
+    cursor: pointer; /* Con trỏ khi di chuột */
+    transition: background 0.3s ease; /* Hiệu ứng chuyển màu */
+    margin: 5px; /* Khoảng cách giữa các nút */
+}
+
+.button:hover {
+    background-color: #b30018; /* Màu nền khi hover */
+}
+
+.button:disabled {
+    background-color: #ccc; /* Màu nền cho nút không thể nhấn */
+    cursor: not-allowed; /* Con trỏ khi nút không thể nhấn */
+}

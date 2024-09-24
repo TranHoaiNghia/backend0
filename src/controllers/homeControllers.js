@@ -1,9 +1,10 @@
 const connection = require('../config/database')
-const {getAllUser} = require('../services/CRUDServices')
+const { use } = require('../routes/web')
+const {getAllUser, getUserById, updateUserById, deleteUserById} = require('../services/CRUDServices')
 const getHomePage = async (req, res) => {
 
     let results = await getAllUser()
-    console.log('>>RESULTS GETALLUSERS: ', results)
+    // console.log('>>RESULTS GETALLUSERS: ', results)
     return res.render('home.ejs', {listUser: results}) // x <- y
 }
 
@@ -14,6 +15,19 @@ const getAbc = (req, res) => {
 const getHoiDanIT = (req, res) => {
     // res.send('<h1>Hoi dan It</h1>')
     res.render('sample.ejs')
+}
+
+const getCreatePage = (req, res) => {
+    res.render('create.ejs')
+}
+
+const getUpdatePage = async (req, res) => {
+    
+    let userID = req.params.id
+
+    let user = await getUserById(userID)
+
+    res.render('edit.ejs', {userEdit: user})
 }
 
 const postCreateUser = async (req, res) => {
@@ -61,10 +75,52 @@ const postCreateUser = async (req, res) => {
     // res.send('Render all information success!!!')
 }
 
-const getCreatePage = (req, res) => {
-    res.render('create.ejs')
+const postUpdateUser = async (req, res) => {
+    let email = req.body.email
+    let name = req.body.name
+    let city = req.body.city
+    let userId = req.body.id
+
+    console.log('email: ', email, 'name: ', name, 'city: ', city, 'userId: ', userId)
+
+
+    await updateUserById(email, name, city, userId)
+
+    // console.log('CHECK RESULT: ', results)
+    res.redirect('/')
+
+
+
+    // connection.query(
+    //     'select * from Users u',
+    //     function (err, results, fields) {
+    //         console.log('Check results: ', results)
+    //     }
+    // )
+
+
+    // const [results, fields] = await connection.query('select * from Users u')
+    // console.log('check results123: ', results)
+    // res.send('Render all information success!!!')
+}
+
+const postDeleteUser = async (req, res) => {
+    let userID = req.params.id
+
+    let user = await getUserById(userID)
+
+    res.render('delete.ejs', {userEdit: user})
+}
+
+const postHandleRemoveUser = async (req, res) => {
+    let userID = req.body.id
+
+    await deleteUserById(userID)    
+
+    res.redirect('/')
 }
 
 module.exports = {
-    getHomePage, getAbc, getHoiDanIT, postCreateUser, getCreatePage
+    getHomePage, getAbc, getHoiDanIT, getCreatePage, postCreateUser, 
+    getUpdatePage, postUpdateUser, postDeleteUser, postHandleRemoveUser, deleteUserById
 }
