@@ -3,6 +3,7 @@ const express = require('express')
 const path = require('path')
 const configViewEngine = require('./config/viewEngine')
 const webRouter = require('./routes/web')
+const apiRouter = require('./routes/api')
 const connection = require('./config/database')
 
 const app = express()
@@ -19,6 +20,7 @@ configViewEngine(app)
 
 // khai báo router
 app.use('/', webRouter)
+app.use('/v1/api', apiRouter )
 
 
 ;(async () => {

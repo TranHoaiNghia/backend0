@@ -6,7 +6,7 @@ const User = require('../models/user')
 
 const getHomePage = async (req, res) => {
 
-    let results = []
+    let results = await User.find({})
     // console.log('>>RESULTS GETALLUSERS: ', results)
     return res.render('home.ejs', {listUser: results}) // x <- y
 }
@@ -28,7 +28,9 @@ const getUpdatePage = async (req, res) => {
     
     let userID = req.params.id
 
-    let user = await getUserById(userID)
+    // let user = await getUserById(userID)
+
+    let user = await User.findById(userID).exec()
 
     res.render('edit.ejs', {userEdit: user})
 }
@@ -75,13 +77,13 @@ const postCreateUser = async (req, res) => {
 
 
 
-    await User.create({
+    await User.create({ //  method: POST
         name: name,
         email: email,
         city: city
     })
 
-    res.send('Creat a user in Mongoose sucess!')
+    res.redirect('/')
 
 }
 
@@ -94,30 +96,20 @@ const postUpdateUser = async (req, res) => {
     console.log('email: ', email, 'name: ', name, 'city: ', city, 'userId: ', userId)
 
 
-    await updateUserById(email, name, city, userId)
+    // await updateUserById(email, name, city, userId)
 
-    // console.log('CHECK RESULT: ', results)
+    await User.updateOne({ _id: userId }, { email: email, name: name, city: city });
+
     res.redirect('/')
 
-
-
-    // connection.query(
-    //     'select * from Users u',
-    //     function (err, results, fields) {
-    //         console.log('Check results: ', results)
-    //     }
-    // )
-
-
-    // const [results, fields] = await connection.query('select * from Users u')
-    // console.log('check results123: ', results)
-    // res.send('Render all information success!!!')
 }
 
 const postDeleteUser = async (req, res) => {
     let userID = req.params.id
 
-    let user = await getUserById(userID)
+    // let user = await getUserById(userID)
+
+    let user = await User.findById(userID)
 
     res.render('delete.ejs', {userEdit: user})
 }
@@ -125,7 +117,13 @@ const postDeleteUser = async (req, res) => {
 const postHandleRemoveUser = async (req, res) => {
     let userID = req.body.id
 
-    await deleteUserById(userID)    
+    // await deleteUserById(userID)
+
+    let result = await User.deleteOne({
+        _id: userID
+    })
+
+    console.log("Check result: ", result)
 
     res.redirect('/')
 }
