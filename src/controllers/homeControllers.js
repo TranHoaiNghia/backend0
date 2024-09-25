@@ -1,9 +1,12 @@
 const connection = require('../config/database')
 const { use } = require('../routes/web')
 const {getAllUser, getUserById, updateUserById, deleteUserById} = require('../services/CRUDServices')
+
+const User = require('../models/user')
+
 const getHomePage = async (req, res) => {
 
-    let results = await getAllUser()
+    let results = []
     // console.log('>>RESULTS GETALLUSERS: ', results)
     return res.render('home.ejs', {listUser: results}) // x <- y
 }
@@ -50,29 +53,36 @@ const postCreateUser = async (req, res) => {
     // )
 
 
-    let [results, fields] = await connection.query(
-        `INSERT INTO Users 
-        (email, name, city)
-        VALUES (?, ?, ?)`,
-        [email, name, city],
-    )
-
-    console.log('CHECK RESULT: ', results)
-    res.send('Create a new users success!')
-
-
-
-    // connection.query(
-    //     'select * from Users u',
-    //     function (err, results, fields) {
-    //         console.log('Check results: ', results)
-    //     }
+    // let [results, fields] = await connection.query(
+    //     `INSERT INTO Users 
+    //     (email, name, city)
+    //     VALUES (?, ?, ?)`,
+    //     [email, name, city],
     // )
 
+    // console.log('CHECK RESULT: ', results)
+    // res.send('Create a new users success!')
 
-    // const [results, fields] = await connection.query('select * from Users u')
-    // console.log('check results123: ', results)
-    // res.send('Render all information success!!!')
+
+
+    // const userSave = new User({
+    //     name: name,
+    //     email: email,
+    //     city: city
+    // })
+
+    // userSave.save()
+
+
+
+    await User.create({
+        name: name,
+        email: email,
+        city: city
+    })
+
+    res.send('Creat a user in Mongoose sucess!')
+
 }
 
 const postUpdateUser = async (req, res) => {

@@ -4,7 +4,6 @@ const path = require('path')
 const configViewEngine = require('./config/viewEngine')
 const webRouter = require('./routes/web')
 const connection = require('./config/database')
-const Kitten = require('./models/kitten')
 
 const app = express()
 
@@ -13,17 +12,13 @@ const hostname = process.env.HOST_NAME
 
 // config req.body
 app.use(express.json()) // for json
-app.use(express.urlencoded({ extended: true })) // for form data
+app.use(express.urlencoded({ extended: true })) // for form data 
 
 //config template engine
 configViewEngine(app)
 
 // khai báo router
 app.use('/', webRouter)
-
-
-const cat = new Kitten({ name: 'Test Mongoose Hoai Nghia Cat' });
-cat.save();
 
 
 ;(async () => {
