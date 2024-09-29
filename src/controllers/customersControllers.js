@@ -49,10 +49,21 @@ const postCreateArrayCustomers = async (req, res) => {
 }
 
 const getAllCustomers = async (req, res) => {
-    let customer = await getAllCustomerServices()
+    let limit = req.query.limit
+    let page = req.query.page
+    let name = req.query.name
+    let address = req.query.address
+
+    let result = null
+    if (limit && page ) {
+        result = await getAllCustomerServices(limit, page, req.query)
+    }
+    else {
+        result = await getAllCustomerServices()
+    }
     return res.status(200).json({
         EC: 0,
-        data: customer
+        data: result
     })
 }
 

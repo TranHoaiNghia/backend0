@@ -1,6 +1,8 @@
 const Customer = require('../models/customer')
 const Customers = require('../models/customer')
 
+const aqp = require('api-query-params')
+
 const createCustomerServices = async (customerData) => {
     try {
         let customer = await Customers.create({
@@ -28,10 +30,32 @@ const createCustomerArrayServices = async (arr) => {
     }
 }
 
-const getAllCustomerServices = async (req, res) => {
+const getAllCustomerServices = async (limit, page, queryString) => {
     try {
-        let customer = await Customers.find({})
-        return customer
+        let result = null
+        if (limit && page) {
+            let skip = (page - 1) * limit
+
+            const { filter } = aqp(queryString);
+            delete filter.page
+
+            console.log('check filter: ', filter)
+
+            result = await Customer.find(filter).skip(skip).limit(limit).exec()
+
+            // if (name && address) {
+            //     result = await Customer.find(
+            //         { "name": { $regex: '.*' + name + '.*' }, "address": { $in: ["hcm", "ha noi", "vung tau"]} }
+            //     ).skip(skip).limit(limit)
+            // }
+            // else {
+            //     result = await Customer.find({}).skip(skip).limit(limit)
+            // }
+        }
+        else {
+            result = await Customers.find({})
+        }
+        return result
 
     } catch (error) {
         console.log("Error: ", error)
@@ -72,5 +96,6 @@ const deleteManyCustomersServices = async (arr) => {
 }
 
 module.exports = {
-    createCustomerServices, createCustomerArrayServices, getAllCustomerServices, updateCustomerServices, deleteACustomerServices, deleteManyCustomersServices
+    createCustomerServices, createCustomerArrayServices, getAllCustomerServices,
+    updateCustomerServices, deleteACustomerServices, deleteManyCustomersServices
 }

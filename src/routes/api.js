@@ -28,6 +28,23 @@ routerAPI.patch('/customers', patchCustomers)
 routerAPI.delete('/customers', deleteACustomer)
 routerAPI.delete('/customers-many', deleteManyCustomers)
 
+routerAPI.get('/info', (req, res) => {
+    console.log('Check Query String: ', req.query)
+
+    res.status(200).json({
+        data: req.query
+    })
+})
+
+
+routerAPI.get('/info/:name/:addres', (req, res) => {
+    console.log('Check Params: ', req.params)
+
+    res.status(200).json({
+        data: req.params
+    })
+})
+
 
 
 module.exports = routerAPI
