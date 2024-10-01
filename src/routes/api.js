@@ -7,6 +7,11 @@ const {getUsersAPI, postCreateUserAPI, putUpdateUserAPI, deleteUserAPI,
 const {postCreateCustomers, postCreateArrayCustomers, 
     getAllCustomers, patchCustomers, deleteACustomer, deleteManyCustomers} = require('../controllers/customersControllers')
 
+const {postCreateProject, getAllProject, 
+    patchAllProject, deleteAllProject , deleteUsersFromProject} = require('../controllers/projectControllers')
+
+const {postCreateTask, getAllTask, updateTask, deleteTask} = require('../controllers/taskControllers')
+
 //khai báo route
 // router.Method('/route', handler)
 routerAPI.get('/', (req, res) =>{
@@ -45,6 +50,16 @@ routerAPI.get('/info/:name/:addres', (req, res) => {
     })
 })
 
+routerAPI.post('/project', postCreateProject)
+routerAPI.get('/project', getAllProject)
+routerAPI.patch('/project', patchAllProject)
+routerAPI.delete('/project', deleteAllProject)
+routerAPI.delete('/project-user', deleteUsersFromProject)
 
+
+routerAPI.post('/task', postCreateTask)
+routerAPI.get('/task', getAllTask)
+routerAPI.put('/task', updateTask)
+routerAPI.delete('/task', deleteTask)
 
 module.exports = routerAPI

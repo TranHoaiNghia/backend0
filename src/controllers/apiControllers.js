@@ -44,9 +44,7 @@ const putUpdateUserAPI = async (req, res) => {
 const deleteUserAPI = async (req, res) => {
     const userID = req.body.id
 
-    let result = await User.deleteOne({
-        _id: userID
-    })
+    let result = await User.deleteById(userID)
 
     return res.status(200).json({
         errorCode: 0,
